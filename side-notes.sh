@@ -4,7 +4,7 @@
 # https://github.com/pdenya/side-notes
 
 # Configuration
-NOTES_BASE_DIR="${SIDENOTES_DIR:-$HOME/SideNotes}"
+NOTES_BASE_DIR="${SIDENOTES_DIR:-$HOME/Code/SideNotes}"
 NOTES_LINK_NAME="SideNotes"
 NOTES_EDITOR="${EDITOR:-code}"
 

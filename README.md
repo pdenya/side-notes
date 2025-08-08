@@ -36,12 +36,12 @@ notes_latest
 
 Remove this line from your shell config (`.bashrc` or `.zshrc`):
 ```bash
-source ~/.zsh_functions/SideNotes.sh
+source ~/.zsh_functions/side-notes.sh
 ```
 
 Then delete the script:
 ```bash
-rm ~/.zsh_functions/SideNotes.sh
+rm ~/.zsh_functions/side-notes.sh
 ```
 
 Your notes in `~/Code/SideNotes` will remain untouched.
