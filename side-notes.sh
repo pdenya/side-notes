@@ -30,7 +30,14 @@ function note {
         return 1
     fi
     
-    local title="${1:-note}"
+    if [[ -z "$1" ]]; then
+        echo "Usage: note <slugified-filename>"
+        echo "Example: note sidenotes-style-adjustments"
+        echo "Note: Use slugified names (lowercase, hyphens for spaces)"
+        return 1
+    fi
+    
+    local title="$1"
     local filename="$NOTES_LINK_NAME/$(date +"%Y-%m-%d_%H-%M")_${title}.md"
     
     cat > "$filename" << EOF
@@ -43,19 +50,32 @@ EOF
     $NOTES_EDITOR "$filename"
 }
 
-# List notes
+# Show usage and list notes
 function notes {
-    if [[ ! -L "$NOTES_LINK_NAME" ]]; then
-        echo "Run 'notes_init' first to initialize"
-        return 1
-    fi
+    echo "SideNotes - Lightweight project notes"
+    echo ""
+    echo "USAGE:"
+    echo "  notes_init [project_name]  Initialize notes for current repository"
+    echo "  note <slugified-filename>  Create a new note (e.g. note sidenotes-style-adjustments)"
+    echo "  notes                      Show this help and list existing notes"
+    echo "  notes_latest              Open the most recent note"
+    echo "  notes_projects            List all projects with notes"
+    echo ""
+    echo "NOTE: Use slugified filenames (lowercase, hyphens for spaces)"
+    echo ""
     
-    if [[ -z "$(ls -A "$NOTES_LINK_NAME" 2>/dev/null)" ]]; then
-        echo "No notes yet. Create one with 'note'"
+    if [[ ! -L "$NOTES_LINK_NAME" ]]; then
+        echo "STATUS: Not initialized. Run 'notes_init' first."
         return 0
     fi
     
-    ls -1t "$NOTES_LINK_NAME"
+    if [[ -z "$(ls -A "$NOTES_LINK_NAME" 2>/dev/null)" ]]; then
+        echo "NOTES: No notes yet. Create one with 'note <filename>'"
+        return 0
+    fi
+    
+    echo "NOTES:"
+    ls -1t "$NOTES_LINK_NAME" | sed 's/^/  /'
 }
 
 # Open latest note
